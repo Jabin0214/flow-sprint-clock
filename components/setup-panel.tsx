@@ -15,7 +15,15 @@ type SetupPanelProps = {
   breakDurationOptions?: number[];
 };
 
+type DurationGroupProps = {
+  label: string;
+  selectedMinutes: number;
+  options: number[];
+  onChange: (minutes: number) => void;
+};
+
 function renderDurationButton(
+  label: string,
   minutes: number,
   selectedMinutes: number,
   onClick: (minutes: number) => void,
@@ -28,10 +36,30 @@ function renderDurationButton(
       type="button"
       className={`${styles.button} ${selected ? styles.buttonSelected : ""}`}
       onClick={() => onClick(minutes)}
-      aria-pressed={selected}
+      role="radio"
+      aria-checked={selected}
+      aria-label={`${label} ${minutes} min`}
     >
       {minutes} min
     </button>
+  );
+}
+
+function DurationGroup({
+  label,
+  selectedMinutes,
+  options,
+  onChange,
+}: DurationGroupProps) {
+  return (
+    <fieldset className={styles.fieldset}>
+      <legend className={styles.label}>{label}</legend>
+      <div className={styles.optionGrid} role="radiogroup" aria-label={label}>
+        {options.map((minutes) =>
+          renderDurationButton(label, minutes, selectedMinutes, onChange),
+        )}
+      </div>
+    </fieldset>
   );
 }
 
@@ -72,31 +100,19 @@ export function SetupPanel({
           />
         </label>
 
-        <div className={styles.field}>
-          <span className={styles.label}>Focus length</span>
-          <div className={styles.optionGrid}>
-            {focusDurationOptions.map((minutes) =>
-              renderDurationButton(
-                minutes,
-                focusDurationMinutes,
-                onFocusDurationChange,
-              ),
-            )}
-          </div>
-        </div>
+        <DurationGroup
+          label="Focus length"
+          selectedMinutes={focusDurationMinutes}
+          options={focusDurationOptions}
+          onChange={onFocusDurationChange}
+        />
 
-        <div className={styles.field}>
-          <span className={styles.label}>Break length</span>
-          <div className={styles.optionGrid}>
-            {breakDurationOptions.map((minutes) =>
-              renderDurationButton(
-                minutes,
-                breakDurationMinutes,
-                onBreakDurationChange,
-              ),
-            )}
-          </div>
-        </div>
+        <DurationGroup
+          label="Break length"
+          selectedMinutes={breakDurationMinutes}
+          options={breakDurationOptions}
+          onChange={onBreakDurationChange}
+        />
       </div>
 
       <div className={styles.actionRow}>

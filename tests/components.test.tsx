@@ -21,6 +21,16 @@ describe("FocusClock", () => {
       screen.getByText(/wrap the thought and choose what happens next/i),
     ).toBeInTheDocument();
   });
+
+  it("limits polite announcements to the timer value instead of the whole panel", () => {
+    render(<FocusClock remainingSeconds={125} />);
+
+    const timer = screen.getByText("02:05");
+    const panel = screen.getByText(/focus clock/i).closest("section");
+
+    expect(timer).toHaveAttribute("aria-live", "polite");
+    expect(panel).not.toHaveAttribute("aria-live");
+  });
 });
 
 describe("SetupPanel", () => {
@@ -65,12 +75,39 @@ describe("SetupPanel", () => {
     fireEvent.change(screen.getByRole("textbox", { name: /single task anchor/i }), {
       target: { value: "Tighten landing page copy" },
     });
-    fireEvent.click(screen.getByRole("button", { name: "30 min" }));
-    fireEvent.click(screen.getByRole("button", { name: "10 min" }));
+    fireEvent.click(
+      screen.getByRole("radio", { name: /focus length 30 min/i }),
+    );
+    fireEvent.click(
+      screen.getByRole("radio", { name: /break length 10 min/i }),
+    );
 
     expect(onTaskAnchorChange).toHaveBeenCalledWith("Tighten landing page copy");
     expect(onFocusDurationChange).toHaveBeenCalledWith(30);
     expect(onBreakDurationChange).toHaveBeenCalledWith(10);
+  });
+
+  it("groups duration choices with labeled radio groups", () => {
+    render(
+      <SetupPanel
+        taskAnchor="Ship timer"
+        focusDurationMinutes={30}
+        breakDurationMinutes={10}
+        onTaskAnchorChange={() => {}}
+        onFocusDurationChange={() => {}}
+        onBreakDurationChange={() => {}}
+        onStart={() => {}}
+      />,
+    );
+
+    expect(screen.getByRole("radiogroup", { name: /focus length/i })).toBeInTheDocument();
+    expect(screen.getByRole("radiogroup", { name: /break length/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("radio", { name: /focus length 30 min/i }),
+    ).toHaveAttribute("aria-checked", "true");
+    expect(
+      screen.getByRole("radio", { name: /break length 10 min/i }),
+    ).toHaveAttribute("aria-checked", "true");
   });
 });
 
@@ -104,6 +141,24 @@ describe("SessionControls", () => {
     expect(() => render(<SessionControls actions={[]} />)).toThrow(
       /between 1 and 3 actions/i,
     );
+  });
+
+  it("accepts explicit action ids for stable keys when labels repeat", () => {
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    render(
+      <SessionControls
+        actions={[
+          { id: "primary-pause", label: "Pause", onClick: () => {} },
+          { id: "secondary-pause", label: "Pause", onClick: () => {} },
+        ]}
+      />,
+    );
+
+    expect(screen.getAllByRole("button", { name: "Pause" })).toHaveLength(2);
+    expect(errorSpy).not.toHaveBeenCalled();
+
+    errorSpy.mockRestore();
   });
 });
 

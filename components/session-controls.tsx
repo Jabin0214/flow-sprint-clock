@@ -1,6 +1,7 @@
 import styles from "./panel.module.css";
 
 type SessionAction = {
+  id?: string;
   label: string;
   onClick: () => void;
   variant?: "primary" | "secondary";
@@ -17,9 +18,9 @@ export function SessionControls({ actions }: SessionControlsProps) {
 
   return (
     <div className={styles.actionRow}>
-      {actions.map((action) => (
+      {actions.map((action, index) => (
         <button
-          key={action.label}
+          key={action.id ?? `${action.label}-${index}`}
           type="button"
           className={`${styles.button} ${styles.buttonFlexible} ${
             action.variant === "primary" ? styles.buttonPrimary : ""

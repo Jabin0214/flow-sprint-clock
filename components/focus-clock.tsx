@@ -12,10 +12,12 @@ export function FocusClock({ remainingSeconds }: FocusClockProps) {
     : "Stay with one clear move until the bell.";
 
   return (
-    <section className={`${styles.panel} ${styles.compactPanel}`} aria-live="polite">
+    <section className={`${styles.panel} ${styles.compactPanel}`}>
       <div className={styles.timerWrap}>
         <p className={styles.eyebrow}>Focus clock</p>
-        <p className={styles.timer}>{formatSeconds(remainingSeconds)}</p>
+        <p className={styles.timer} aria-live="polite" aria-atomic="true">
+          {formatSeconds(remainingSeconds)}
+        </p>
         <p className={styles.hint}>{hint}</p>
       </div>
     </section>
