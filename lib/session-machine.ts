@@ -8,6 +8,7 @@ type SessionBase = {
 
 export type SetupSession = SessionBase & {
   mode: "setup";
+  taskAnchor?: string;
 };
 
 export type FocusSession = SessionBase & {
@@ -29,9 +30,9 @@ export type BreakSession = SessionBase & {
 
 export type PausedSession = SessionBase & {
   mode: "paused";
-  taskAnchor?: string;
+  taskAnchor: string;
   remainingSeconds: number;
-  pausedFrom: Exclude<SessionMode, "setup" | "paused">;
+  pausedFrom: "focus" | "break";
 };
 
 export type SessionState =
@@ -62,7 +63,7 @@ export function createInitialSession(): SetupSession {
 }
 
 export function startFocusSession(
-  session: SetupSession | DecisionSession | BreakSession | PausedSession,
+  session: SetupSession,
   taskAnchor: string,
 ): FocusSession {
   return {
@@ -134,7 +135,7 @@ export function resumeSession(
     return {
       ...createBaseSession(session),
       mode: "break",
-      taskAnchor: session.taskAnchor ?? "",
+      taskAnchor: session.taskAnchor,
       remainingSeconds: session.remainingSeconds,
     };
   }
@@ -142,7 +143,7 @@ export function resumeSession(
   return {
     ...createBaseSession(session),
     mode: "focus",
-    taskAnchor: session.taskAnchor ?? "",
+    taskAnchor: session.taskAnchor,
     remainingSeconds: session.remainingSeconds,
   };
 }

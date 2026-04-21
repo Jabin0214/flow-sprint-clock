@@ -63,6 +63,25 @@ describe("session-machine", () => {
     const resumed = resumeSession(paused);
 
     expect(paused.mode).toBe("paused");
+    expect(paused.remainingSeconds).toBe(20 * 60);
+    expect(paused.taskAnchor).toBe("Ship auth callback");
     expect(resumed.mode).toBe("focus");
+    expect(resumed.remainingSeconds).toBe(20 * 60);
+    expect(resumed.taskAnchor).toBe("Ship auth callback");
+  });
+
+  it("resumes a paused break back to break with time preserved", () => {
+    const decision = completeFocusSession(
+      startFocusSession(createInitialSession(), "Ship auth callback"),
+    );
+    const paused = pauseSession(startBreakSession(decision));
+    const resumed = resumeSession(paused);
+
+    expect(paused.mode).toBe("paused");
+    expect(paused.pausedFrom).toBe("break");
+    expect(paused.remainingSeconds).toBe(5 * 60);
+    expect(resumed.mode).toBe("break");
+    expect(resumed.remainingSeconds).toBe(5 * 60);
+    expect(resumed.taskAnchor).toBe("Ship auth callback");
   });
 });
