@@ -1,0 +1,187 @@
+.panel {
+  display: grid;
+  gap: 1.5rem;
+  border: 2px solid #111111;
+  background: #ffffff;
+  color: #111111;
+  padding: 1.5rem;
+}
+
+.compactPanel {
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.body {
+  margin: 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  border: 2px solid #111111;
+  background: #ffffff;
+  color: #111111;
+  padding: 1rem 1.1rem;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.input::placeholder {
+  color: #555555;
+}
+
+.optionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  border: 2px solid #111111;
+  background: #ffffff;
+  color: #111111;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 120ms ease;
+}
+
+.button:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+.button:focus-visible,
+.input:focus-visible {
+  outline: 3px solid #111111;
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.button:disabled:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+.buttonPrimary {
+  background: #111111;
+  color: #ffffff;
+}
+
+.buttonPrimary:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+.buttonSelected {
+  background: #111111;
+  color: #ffffff;
+}
+
+.actionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.buttonFlexible {
+  flex: 1 1 12rem;
+}
+
+.timerWrap {
+  display: grid;
+  gap: 1rem;
+}
+
+.timer {
+  margin: 0;
+  font-size: clamp(5rem, 16vw, 11rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.hint {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.anchor {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.promptList {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.promptItem {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 900px) {
+  .panel {
+    padding: 2rem;
+  }
+
+  .actionRow {
+    flex-wrap: nowrap;
+  }
+}
