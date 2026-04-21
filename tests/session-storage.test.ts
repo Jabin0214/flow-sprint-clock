@@ -34,4 +34,21 @@ describe("session-storage", () => {
       "Finish auth callback",
     );
   });
+
+  it("falls back to defaults for malformed stored field types", () => {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        focusDurationMinutes: "30",
+        breakDurationMinutes: 10,
+        lastTaskAnchor: 123,
+      }),
+    );
+
+    expect(loadPreferences()).toEqual({
+      focusDurationMinutes: 20,
+      breakDurationMinutes: 10,
+      lastTaskAnchor: "",
+    });
+  });
 });

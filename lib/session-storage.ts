@@ -24,10 +24,17 @@ export function loadPreferences(): StoredPreferences {
 
     return {
       focusDurationMinutes:
-        parsed.focusDurationMinutes ?? DEFAULT_PREFERENCES.focusDurationMinutes,
+        typeof parsed.focusDurationMinutes === "number"
+          ? parsed.focusDurationMinutes
+          : DEFAULT_PREFERENCES.focusDurationMinutes,
       breakDurationMinutes:
-        parsed.breakDurationMinutes ?? DEFAULT_PREFERENCES.breakDurationMinutes,
-      lastTaskAnchor: parsed.lastTaskAnchor ?? DEFAULT_PREFERENCES.lastTaskAnchor,
+        typeof parsed.breakDurationMinutes === "number"
+          ? parsed.breakDurationMinutes
+          : DEFAULT_PREFERENCES.breakDurationMinutes,
+      lastTaskAnchor:
+        typeof parsed.lastTaskAnchor === "string"
+          ? parsed.lastTaskAnchor
+          : DEFAULT_PREFERENCES.lastTaskAnchor,
     };
   } catch {
     return DEFAULT_PREFERENCES;
