@@ -20,3 +20,9 @@ npm run build
 ## Deploy
 
 Push the repository to GitHub, then import it into Vercel as a standard Next.js project.
+
+## Vercel
+
+1. Import the GitHub repository into Vercel.
+2. Accept the default Next.js settings.
+3. Deploy without additional environment variables.
