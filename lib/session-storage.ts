@@ -12,14 +12,22 @@ export const DEFAULT_PREFERENCES: StoredPreferences = {
   lastTaskAnchor: "",
 };
 
+function createDefaultPreferences(): StoredPreferences {
+  return {
+    focusDurationMinutes: DEFAULT_PREFERENCES.focusDurationMinutes,
+    breakDurationMinutes: DEFAULT_PREFERENCES.breakDurationMinutes,
+    lastTaskAnchor: DEFAULT_PREFERENCES.lastTaskAnchor,
+  };
+}
+
 export function loadPreferences(): StoredPreferences {
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-
-  if (!raw) {
-    return DEFAULT_PREFERENCES;
-  }
-
   try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+
+    if (!raw) {
+      return createDefaultPreferences();
+    }
+
     const parsed = JSON.parse(raw) as Partial<StoredPreferences>;
 
     return {
@@ -37,10 +45,14 @@ export function loadPreferences(): StoredPreferences {
           : DEFAULT_PREFERENCES.lastTaskAnchor,
     };
   } catch {
-    return DEFAULT_PREFERENCES;
+    return createDefaultPreferences();
   }
 }
 
 export function savePreferences(preferences: StoredPreferences): void {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+  } catch {
+    // Ignore storage failures so callers can continue without persistence.
+  }
 }

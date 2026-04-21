@@ -7,6 +7,7 @@ import {
 describe("session-storage", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    vi.restoreAllMocks();
   });
 
   it("returns defaults when storage is empty", () => {
@@ -50,5 +51,41 @@ describe("session-storage", () => {
       breakDurationMinutes: 10,
       lastTaskAnchor: "",
     });
+  });
+
+  it("returns defaults when stored JSON is invalid", () => {
+    window.localStorage.setItem(STORAGE_KEY, "{");
+
+    expect(loadPreferences()).toEqual({
+      focusDurationMinutes: 20,
+      breakDurationMinutes: 5,
+      lastTaskAnchor: "",
+    });
+  });
+
+  it("returns defaults when reading storage fails", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("storage unavailable");
+    });
+
+    expect(loadPreferences()).toEqual({
+      focusDurationMinutes: 20,
+      breakDurationMinutes: 5,
+      lastTaskAnchor: "",
+    });
+  });
+
+  it("does not throw when writing storage fails", () => {
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("storage unavailable");
+    });
+
+    expect(() =>
+      savePreferences({
+        focusDurationMinutes: 30,
+        breakDurationMinutes: 10,
+        lastTaskAnchor: "Finish auth callback",
+      }),
+    ).not.toThrow();
   });
 });
