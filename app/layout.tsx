@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Flow Sprint Clock",
-  description: "Standalone Next.js scaffold for the Flow Sprint Clock app.",
+  description: "An ADHD-friendly focus clock for coding and study flow.",
 };
 
 export default function RootLayout({

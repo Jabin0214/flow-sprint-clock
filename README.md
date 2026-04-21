@@ -1,15 +1,22 @@
 # Flow Sprint Clock
 
-A standalone Next.js scaffold for an ADHD-friendly focus timer.
+ADHD-friendly focus timer built with Next.js for coding, project work, and study flow.
 
-## Getting Started
-
-Run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the scaffold.
+## Quality checks
 
-Edit `app/page.tsx` to start building the product UI.
+```bash
+npm run lint
+npm test
+npm run build
+```
+
+## Deploy
+
+Push the repository to GitHub, then import it into Vercel as a standard Next.js project.

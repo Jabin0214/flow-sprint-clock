@@ -1,0 +1,153 @@
+.page {
+  min-height: 100vh;
+  padding: 1rem;
+  background:
+    radial-gradient(circle at top, rgba(17, 17, 17, 0.08), transparent 28%),
+    linear-gradient(180deg, #f6f4ef 0%, #ece7dc 100%);
+}
+
+.shell {
+  min-height: calc(100vh - 2rem);
+  border: 2px solid #111111;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1.25rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.brand {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.headline {
+  margin: 0;
+  font-size: clamp(1.6rem, 2vw, 2.6rem);
+  line-height: 1;
+}
+
+.subhead {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.badge {
+  border: 2px solid #111111;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.setupStage {
+  display: grid;
+  gap: 1.25rem;
+  align-content: center;
+}
+
+.setupNote {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.focusStage,
+.decisionStage {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.supportStack {
+  display: grid;
+  gap: 1rem;
+}
+
+.supportPanel {
+  border: 2px solid #111111;
+  background: #ffffff;
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.supportLabel {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.supportText {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.footerHint {
+  border-top: 2px solid #111111;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.footerHint p {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding: 1.5rem;
+  }
+
+  .shell {
+    min-height: calc(100vh - 3rem);
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .focusStage,
+  .decisionStage {
+    grid-template-columns: minmax(18rem, 0.85fr) minmax(30rem, 1.15fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .setupStage {
+    grid-template-columns: minmax(18rem, 0.75fr) minmax(28rem, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+}
